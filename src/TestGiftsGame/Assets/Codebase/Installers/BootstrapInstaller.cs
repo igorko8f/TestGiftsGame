@@ -1,3 +1,4 @@
+using Codebase.Level;
 using Codebase.Systems.CommandSystem;
 using Codebase.Systems.UnityLifecycle;
 using UnityEngine;
@@ -8,6 +9,7 @@ namespace Codebase.Installers
     public class BootstrapInstaller : MonoInstaller
     {
         [SerializeField] private UnityLifecycleHandler lifecycleHandler;
+        [SerializeField] private FadeScreen fadeScreen;
         public override void InstallBindings()
         {
             BindCommandBinder();
@@ -17,6 +19,7 @@ namespace Codebase.Installers
             
             BindUnityLifecycleHandler();
             BindUnityLifecycleService();
+            BindFadeScreen();
         }
 
         private void InstallEntryPoint() => 
@@ -45,6 +48,11 @@ namespace Codebase.Installers
             Container
                 .BindInterfacesTo<UnityLifecycleService>()
                 .FromNew()
+                .AsSingle();
+
+        private void BindFadeScreen() =>
+            Container.Bind<FadeScreen>()
+                .FromInstance(fadeScreen)
                 .AsSingle();
     }
 }

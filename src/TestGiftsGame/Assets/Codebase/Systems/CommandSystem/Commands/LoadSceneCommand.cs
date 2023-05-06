@@ -1,3 +1,4 @@
+using Codebase.Level;
 using Codebase.Systems.CommandSystem.Payloads;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,15 +9,18 @@ namespace Codebase.Systems.CommandSystem.Commands
     public class LoadSceneCommand : Command
     {
         private readonly ZenjectSceneLoader _sceneLoader;
+        private readonly FadeScreen _fadeScreen;
 
-        public LoadSceneCommand(ZenjectSceneLoader sceneLoader)
+        public LoadSceneCommand(ZenjectSceneLoader sceneLoader, FadeScreen fadeScreen)
         {
             _sceneLoader = sceneLoader;
+            _fadeScreen = fadeScreen;
         }
 
         protected override void Execute(ICommandPayload payload)
         {
             Retain();
+            _fadeScreen.FadeIn();
 
             var scene = payload as SceneNamePayload;
             if (scene is null)

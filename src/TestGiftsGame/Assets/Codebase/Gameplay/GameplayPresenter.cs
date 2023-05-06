@@ -23,10 +23,14 @@ namespace Codebase.Gameplay
 
         public void ConstructGameplay(LevelConfiguration levelConfiguration)
         {
+            View.Hide();
+            
             ConstructCraftSlots();
             ConstructBoxVariants(levelConfiguration);
             ConstructBowVariants(levelConfiguration);
             ConstructsDesignVariants(levelConfiguration);
+            
+            View.Show();
         }
 
         private void ConstructsDesignVariants(LevelConfiguration levelConfiguration)
