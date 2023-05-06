@@ -1,4 +1,5 @@
-﻿using Codebase.Systems.CommandSystem;
+﻿using Codebase.Services;
+using Codebase.Systems.CommandSystem;
 using Codebase.Systems.CommandSystem.Commands;
 using Codebase.Systems.CommandSystem.Signals;
 
@@ -18,7 +19,10 @@ namespace Codebase.Installers
 
         protected override void InstallServices()
         {
-            
+            Container
+                .BindInterfacesTo<InputService>()
+                .FromNew()
+                .AsSingle();
         }
     }
 }

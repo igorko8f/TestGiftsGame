@@ -12,5 +12,40 @@
             Bow = bow;
             Design = design;
         }
+        
+        public Gift ()
+        {
+            Box = null;
+            Bow = null;
+            Design = null;
+        }
+
+        public Gift Clone()
+        {
+            return new Gift(Box, Bow, Design);
+        }
+
+        public void Copy(Gift from)
+        {
+            Box = from.Box;
+            Bow = from.Bow;
+            Design = from.Design;
+        }
+        
+        public void ApplyGiftPart(GiftPart part)
+        {
+            switch (part)
+            {
+                case Box box:
+                    Box = box;
+                    break;
+                case Bow bow:
+                    Bow = bow;
+                    break;
+                case Design design:
+                    Design = design;
+                    break;
+            }
+        }
     }
 }

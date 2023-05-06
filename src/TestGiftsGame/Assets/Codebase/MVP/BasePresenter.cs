@@ -12,6 +12,8 @@ namespace Codebase.MVP
         {
             View = viewContract;
             CompositeDisposable = new CompositeDisposable();
+            
+            View.Initialize();
         }
 
         public void AddDisposable(IDisposable disposable)
