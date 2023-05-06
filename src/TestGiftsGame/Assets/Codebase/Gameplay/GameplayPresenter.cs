@@ -29,6 +29,7 @@ namespace Codebase.Gameplay
             ConstructBoxVariants(levelConfiguration);
             ConstructBowVariants(levelConfiguration);
             ConstructsDesignVariants(levelConfiguration);
+            ConstructTrashBin();
             
             View.Show();
         }
@@ -76,6 +77,11 @@ namespace Codebase.Gameplay
                 AddDisposable(new CraftingSlotPresenter(view, _staticDataService.CraftingRecipes, _inputService, View.Canvas,
                     true));
             }
+        }
+
+        private void ConstructTrashBin()
+        {
+            AddDisposable(new TrashBinPresenter(View.TrashBin, _inputService));
         }
     }
 }

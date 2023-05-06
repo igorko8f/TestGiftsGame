@@ -9,7 +9,6 @@ namespace Codebase.Gameplay.ItemContainer
     {
         IObservable<Unit> OnDragBegin { get; }
         IObservable<Unit> OnDragEnd { get; }
-        void SetScaleFactor(float scaleFactor);
         void SetSprite(Sprite sprite);
         void SetParent(Transform canvasTransform);
         void ResetParent();

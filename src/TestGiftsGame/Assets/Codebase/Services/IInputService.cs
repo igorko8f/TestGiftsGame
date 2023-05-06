@@ -1,11 +1,11 @@
 ﻿using System;
-using Codebase.Gameplay.ItemContainer;
+using Codebase.Gameplay;
 
 namespace Codebase.Services
 {
     public interface IInputService : IDisposable
     {
-        DraggablePresenter CurrentDraggableItem { get; }
+        DraggablePresenter CurrentGiftPartDraggableItem { get; }
         void SetCurrentDraggableItem(DraggablePresenter current);
     }
 }

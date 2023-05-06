@@ -1,20 +1,20 @@
-﻿using Codebase.Gameplay.ItemContainer;
+﻿using Codebase.Gameplay;
 
 namespace Codebase.Services
 {
     public class InputService : IInputService
     {
-        public DraggablePresenter CurrentDraggableItem => _currentDraggableItem;
-        private DraggablePresenter _currentDraggableItem;
+        public DraggablePresenter CurrentGiftPartDraggableItem => _currentGiftPartDraggableItem;
+        private DraggablePresenter _currentGiftPartDraggableItem;
 
         public void SetCurrentDraggableItem(DraggablePresenter current)
         {
-            _currentDraggableItem = current;
+            _currentGiftPartDraggableItem = current;
         }
         
         public void Dispose()
         {
-            _currentDraggableItem = null;
+            _currentGiftPartDraggableItem = null;
         }
     }
 }

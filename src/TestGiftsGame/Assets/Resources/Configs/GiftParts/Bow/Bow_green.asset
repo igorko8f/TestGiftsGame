@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea605c670fbf4d9db3701f905eac6066, type: 3}
   m_Name: Bow_green
   m_EditorClassIdentifier: 
-  Sprite: {fileID: 21300000, guid: 3c2bba67bd973974cbd54d866c9f54d9, type: 3}
+  Sprite: {fileID: 21300000, guid: 3c2e11af7b92d2a48be8ce10133cd841, type: 3}

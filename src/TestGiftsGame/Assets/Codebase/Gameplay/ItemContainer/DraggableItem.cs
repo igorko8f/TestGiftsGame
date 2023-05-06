@@ -61,13 +61,14 @@ namespace Codebase.Gameplay.ItemContainer
 
         public void OnDrag(PointerEventData eventData)
         {
-            ChangePosition(eventData.delta);
+            ChangePosition(eventData.position);
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
             _canvasGroup.blocksRaycasts = true;
             _onEndDrag?.OnNext(Unit.Default);
+            ResetParent();
             ReturnBack();
         }
 
@@ -78,7 +79,7 @@ namespace Codebase.Gameplay.ItemContainer
 
         private void ChangePosition(Vector2 position)
         {
-            _transform.anchoredPosition += position / _scaleFactor;
+            _transform.position = position;
         }
     }
 }

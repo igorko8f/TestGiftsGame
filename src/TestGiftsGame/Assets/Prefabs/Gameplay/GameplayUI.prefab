@@ -298,6 +298,7 @@ MonoBehaviour:
   - {fileID: 1706034757060422901}
   - {fileID: 1706034757384512368}
   - {fileID: 1706034758260397224}
+  _trashBin: {fileID: 2902080658150776974}
 --- !u!1 &2902080658627093913
 GameObject:
   m_ObjectHideFlags: 0

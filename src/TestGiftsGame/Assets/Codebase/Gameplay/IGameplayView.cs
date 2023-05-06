@@ -11,6 +11,7 @@ namespace Codebase.Gameplay
         DraggableItemContainer[] BoxContainers { get; }
         DraggableItemContainer[] BowContainers { get; }
         DraggableItemContainer[] DesignContainers { get; }
+        TrashBin TrashBin { get; }
         Canvas Canvas { get; }
         void Show();
         void Hide();

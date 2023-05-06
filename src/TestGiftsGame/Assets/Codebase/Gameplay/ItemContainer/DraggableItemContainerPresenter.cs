@@ -13,7 +13,7 @@ namespace Codebase.Gameplay.ItemContainer
         private readonly Canvas _gameplayCanvas;
         private readonly IInputService _inputService;
         
-        private DraggablePresenter _currentDraggable;
+        private GiftPartDraggablePresenter _currentGiftPartDraggable;
         private IDisposable _itemApplySubscription;
         
         public DraggableItemContainerPresenter(
@@ -33,8 +33,8 @@ namespace Codebase.Gameplay.ItemContainer
         private void SetupGiftPartView()
         {
             var giftView = View.CreateViewForGift();
-            _currentDraggable = new DraggablePresenter(giftView, _inputService, _generatedPart, _gameplayCanvas);
-            _itemApplySubscription = _currentDraggable.OnItemApplied
+            _currentGiftPartDraggable = new GiftPartDraggablePresenter(giftView, _inputService, _generatedPart, _gameplayCanvas);
+            _itemApplySubscription = _currentGiftPartDraggable.OnItemApplied
                 .Subscribe(_ => OnItemApplied());
         }
 

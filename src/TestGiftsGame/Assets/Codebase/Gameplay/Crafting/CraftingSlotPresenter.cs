@@ -1,4 +1,7 @@
-﻿using Codebase.Craft;
+﻿using System;
+using Codebase.Craft;
+using Codebase.Gameplay.ItemContainer;
+using Codebase.Gifts;
 using Codebase.MVP;
 using Codebase.Services;
 using UniRx;
@@ -13,6 +16,7 @@ namespace Codebase.Gameplay.Crafting
         private readonly Canvas _gameplayCanvas;
 
         private GiftDraggablePresenter _generatedDraggableGift;
+        private IDisposable _giftDestroySubscription;
         
         public CraftingSlotPresenter(
             ICraftingSlotView viewContract,
@@ -35,10 +39,11 @@ namespace Codebase.Gameplay.Crafting
 
         private void OnItemDropped()
         {
-            var draggable = _inputService.CurrentDraggableItem;
-            if (draggable == null) return;
+            if (_inputService.CurrentGiftPartDraggableItem is not GiftPartDraggablePresenter draggable) return;
             
             if (_generatedDraggableGift is null) SetupGiftView();
+            
+            if (draggable.GiftPart is Box && _generatedDraggableGift.Gift.Box != null) return;
 
             var gift = _generatedDraggableGift.Gift.Clone();
             gift.ApplyGiftPart(draggable.GiftPart);
@@ -55,7 +60,15 @@ namespace Codebase.Gameplay.Crafting
         private void SetupGiftView()
         {
              var giftView = View.CreateViewForGift();
-             _generatedDraggableGift = new GiftDraggablePresenter(giftView, _gameplayCanvas);
+             _generatedDraggableGift = new GiftDraggablePresenter(giftView, _inputService, _gameplayCanvas);
+             _giftDestroySubscription = _generatedDraggableGift.OnGiftDestroy
+                 .Subscribe(_ => OnGiftDestroyed());
+        }
+
+        private void OnGiftDestroyed()
+        {
+            _giftDestroySubscription?.Dispose();
+            _generatedDraggableGift = null;
         }
     }
 }

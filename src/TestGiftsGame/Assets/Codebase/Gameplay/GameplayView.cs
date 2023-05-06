@@ -12,12 +12,14 @@ namespace Codebase.Gameplay
         public DraggableItemContainer[] DesignContainers => _boxContainers;
         public DraggableItemContainer[] BoxContainers => _bowContainers;
         public DraggableItemContainer[] BowContainers => _designContainers;
+        public TrashBin TrashBin => _trashBin;
         public Canvas Canvas => _canvas;
 
         [SerializeField] private CraftingSlot[] _craftingSlots;
         [SerializeField] private DraggableItemContainer[] _boxContainers;
         [SerializeField] private DraggableItemContainer[] _bowContainers;
         [SerializeField] private DraggableItemContainer[] _designContainers;
+        [SerializeField] private TrashBin _trashBin;
 
         private Canvas _canvas;
 
