@@ -4,9 +4,9 @@ namespace Codebase.Systems.CommandSystem.Payloads
 {
     public class SceneNamePayload : ICommandPayload
     {
-        public SceneName Info;
+        public SceneInfo Info;
 
-        public SceneNamePayload(SceneName info)
+        public SceneNamePayload(SceneInfo info)
         {
             Info = info;
         }
