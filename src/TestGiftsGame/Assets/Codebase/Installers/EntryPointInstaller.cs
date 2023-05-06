@@ -23,23 +23,37 @@ namespace Codebase.Installers
             BindEventBrokerService();
             BindResourceProviderService();
             BindStaticDataService();
+            BindSaveLoadService();
+            BindPlayerProgressService();
         }
-        
+
         private void BindEventBrokerService() => 
             Container
                 .BindInterfacesTo<EventBrokerService>()
                 .FromNew()
                 .AsSingle();
-        
+
         private void BindResourceProviderService() =>
             Container
                 .BindInterfacesTo<ProjectResourcesProvider>()
                 .FromNew()
                 .AsSingle();
-        
+
         private void BindStaticDataService() =>
             Container
                 .BindInterfacesTo<StaticDataService>()
+                .FromNew()
+                .AsSingle();
+
+        private void BindSaveLoadService() =>
+            Container
+                .BindInterfacesTo<SaveLoadService>()
+                .FromNew()
+                .AsSingle();
+
+        private void BindPlayerProgressService() =>
+            Container
+                .BindInterfacesTo<PlayerProgressService>()
                 .FromNew()
                 .AsSingle();
     }
