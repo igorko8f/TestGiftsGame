@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Codebase.Gifts;
+using Codebase.Services;
 using UnityEngine;
 
 namespace Codebase.Craft
 {
     [CreateAssetMenu(fileName = "BoxRecipes", menuName = "StaticData/Craft/BoxRecipes")]
-    public class BoxCraftingRecipes : ScriptableObject
+    public class BoxCraftingRecipes : ScriptableObject, IResource
     {
         public List<CraftingRecipe> Recipes;
 

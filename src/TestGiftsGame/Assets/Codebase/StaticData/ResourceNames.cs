@@ -1,4 +1,6 @@
 ﻿using System;
+using Codebase.Craft;
+using Codebase.Level;
 using Codebase.Services;
 
 namespace Codebase.StaticData
@@ -8,6 +10,8 @@ namespace Codebase.StaticData
         //Declare resources 
         private static ResourceName[] resources =
         {
+            new ResourceName(typeof(LevelConfiguration), "Configs/LevelConfigurations"),
+            new ResourceName(typeof(BoxCraftingRecipes), "Configs/BoxRecipes")
         };
 
         public static string GetLocation<TResource>() where TResource : IResource

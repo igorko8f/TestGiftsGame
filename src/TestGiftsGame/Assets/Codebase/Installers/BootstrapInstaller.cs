@@ -1,6 +1,4 @@
 using Codebase.Systems.CommandSystem;
-using Codebase.Systems.EventBroker;
-using Codebase.Systems.StaticData;
 using Codebase.Systems.UnityLifecycle;
 using UnityEngine;
 using Zenject;
@@ -13,11 +11,16 @@ namespace Codebase.Installers
         public override void InstallBindings()
         {
             BindCommandBinder();
-            BindEventBrokerService();
             BindCommandDispatcher();
-            BindStaticDataService();
-            BindUnityLifecycle();
+            
+            InstallEntryPoint();
+            
+            BindUnityLifecycleHandler();
+            BindUnityLifecycleService();
         }
+
+        private void InstallEntryPoint() => 
+            Container.Install<EntryPointInstaller>();
 
         private void BindCommandBinder() => 
             Container
@@ -25,29 +28,23 @@ namespace Codebase.Installers
                 .AsCached()
                 .CopyIntoAllSubContainers();
 
-        private void BindEventBrokerService() => 
-            Container
-                .BindInterfacesTo<EventBrokerService>()
-                .FromNew()
-                .AsSingle();
-
         private void BindCommandDispatcher() => 
             Container
                 .BindInterfacesTo<CommandDispatcher>()
                 .FromNew()
                 .AsSingle();
 
-        private void BindStaticDataService() =>
+        private void BindUnityLifecycleHandler() =>
             Container
-                .BindInterfacesTo<StaticDataService>()
-                .FromNew()
-                .AsSingle();
-
-        private void BindUnityLifecycle() =>
-            Container
-                .Bind<IUnityLifecycleHandler>()
-                .To<UnityLifecycleHandler>()
+                .BindInterfacesTo<UnityLifecycleHandler>()
                 .FromComponentInNewPrefab(lifecycleHandler)
+                .AsSingle()
+                .NonLazy();
+
+        private void BindUnityLifecycleService() =>
+            Container
+                .BindInterfacesTo<UnityLifecycleService>()
+                .FromNew()
                 .AsSingle();
     }
 }

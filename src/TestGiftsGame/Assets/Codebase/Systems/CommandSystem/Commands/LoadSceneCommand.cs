@@ -8,7 +8,7 @@ namespace Codebase.Systems.CommandSystem.Commands
     public class LoadSceneCommand : Command
     {
         private readonly ZenjectSceneLoader _sceneLoader;
-        
+
         public LoadSceneCommand(ZenjectSceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
