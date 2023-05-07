@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Codebase.Services;
+using Codebase.StaticData;
 
 namespace Codebase.Customers
 {
@@ -7,14 +8,20 @@ namespace Codebase.Customers
     {
         private readonly ICustomerFactory _customerFactory;
         private readonly ILevelProgressService _levelProgressService;
+        private readonly IPlayerProgressService _playerProgressService;
+        private readonly PriceList _priceList;
         private readonly List<CustomerPresenter> _customers = new();
         
         public CustomersHolder(
             ICustomerFactory customerFactory,
-            ILevelProgressService levelProgressService)
+            ILevelProgressService levelProgressService,
+            IPlayerProgressService playerProgressService,
+            PriceList priceList)
         {
             _customerFactory = customerFactory;
             _levelProgressService = levelProgressService;
+            _playerProgressService = playerProgressService;
+            _priceList = priceList;
         }
 
         public void CreateInitialCustomers(int count)
@@ -23,13 +30,17 @@ namespace Codebase.Customers
                 CreateAnotherCustomer();
         }
 
-        public void RemoveCustomer(CustomerPresenter customer)
+        private void TrackServedCustomer(CustomerPresenter customer, int ordersCount)
         {
-            customer.OnCustomerOrderComplete -= RemoveCustomer;
-            
             _levelProgressService.DecreaseCustomers();
+            _playerProgressService.AddResources(_priceList.GetRewardByOrderCount(ordersCount));
+            RemoveCustomer(customer);
+        }
+
+        private void RemoveCustomer(CustomerPresenter customer)
+        {
+            UnsubscribeFromCustomerEvents(customer);
             _customers.Remove(customer);
-            
             CreateAnotherCustomer();
         }
 
@@ -40,14 +51,26 @@ namespace Codebase.Customers
             var customer = _customerFactory.CreateCustomer();
             if (customer is null) return;
 
-            customer.OnCustomerOrderComplete += RemoveCustomer;
+            SubscribeOnCustomerEvents(customer);
             _customers.Add(customer);
         }
 
+        private void SubscribeOnCustomerEvents(CustomerPresenter customer)
+        {
+            customer.OnCustomerOrderComplete += TrackServedCustomer;
+            customer.OnCustomerTimeLeft += RemoveCustomer;
+        }
+        
+        private void UnsubscribeFromCustomerEvents(CustomerPresenter customer)
+        {
+            customer.OnCustomerOrderComplete -= TrackServedCustomer;
+            customer.OnCustomerTimeLeft -= RemoveCustomer;
+        }
+        
         public void Dispose()
         {
             foreach (var customer in _customers)
-                customer.OnCustomerOrderComplete -= RemoveCustomer;
+                UnsubscribeFromCustomerEvents(customer);
             
             _customers.Clear();
         }

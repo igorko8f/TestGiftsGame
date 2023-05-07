@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48f8d3e1b6f4291b80de506511ab9ec, type: 3}
   m_Name: Level_1
   m_EditorClassIdentifier: 
-  levelNumber: 1
+  LevelNumber: 1
   CustomersCount: 10
-  OrderPreparationTime: 1
+  Complexity: 1
+  OrderPreparationTime: 10
   AvailableBoxes:
   - {fileID: 11400000, guid: 23468456283499f48b04836a23d4a527, type: 2}
   - {fileID: 11400000, guid: b59da0352f1d1c54db1ce7522593f748, type: 2}

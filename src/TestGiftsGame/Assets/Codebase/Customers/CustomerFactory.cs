@@ -49,7 +49,7 @@ namespace Codebase.Customers
                 return null;
             }
 
-            var customer = new Customer(customerOrder);
+            var customer = new Customer(customerOrder, _levelConfiguration.OrderPreparationTime);
             return new CustomerPresenter(customerView, _inputService, _craftingRecipes, customer, spawnPoint);
         }
 

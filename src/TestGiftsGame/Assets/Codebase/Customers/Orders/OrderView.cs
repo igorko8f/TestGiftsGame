@@ -2,6 +2,7 @@
 using Codebase.Gameplay.ItemContainer;
 using Codebase.Gifts;
 using Codebase.MVP;
+using TMPro;
 using UniRx;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -18,6 +19,7 @@ namespace Codebase.Customers.Orders
         [SerializeField] private Image _boxImage;
         [SerializeField] private Image _bowImage;
         [SerializeField] private Image _designImage;
+        [SerializeField] private TMP_Text _ordersCountText;
 
         private Subject<Unit> _onItemDropped = new();
 
@@ -34,6 +36,12 @@ namespace Codebase.Customers.Orders
             ChangeGiftPartSprite(gift.Design, _designImage);
         }
 
+        public void SetOrdersCountText(int ordersCount)
+        {
+            _ordersCountText.enabled = ordersCount > 1;
+            _ordersCountText.text = $"x{ordersCount}";
+        }
+        
         private void ChangeGiftPartSprite(GiftPart giftPart, Image image)
         {
             bool partExist = giftPart is not null;

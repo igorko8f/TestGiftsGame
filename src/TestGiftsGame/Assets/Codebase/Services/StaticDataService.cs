@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Codebase.Craft;
 using Codebase.Level;
+using Codebase.StaticData;
 using UnityEngine;
 
 namespace Codebase.Services
@@ -13,9 +14,11 @@ namespace Codebase.Services
         private readonly bool _initialized = false;
 
         public BoxCraftingRecipes CraftingRecipes => _craftingRecipes;
-        
+        public PriceList PriceList => _priceList;
+
         private List<LevelConfiguration> _levelConfigurations = new();
         private BoxCraftingRecipes _craftingRecipes;
+        private PriceList _priceList;
 
 
         public StaticDataService(IProjectResourcesProvider resourcesProvider)
@@ -52,6 +55,10 @@ namespace Codebase.Services
 
             _craftingRecipes = _resourcesProvider
                 .LoadResources<BoxCraftingRecipes>()
+                .FirstOrDefault();
+
+            _priceList = _resourcesProvider
+                .LoadResources<PriceList>()
                 .FirstOrDefault();
 
             return _craftingRecipes is not null;

@@ -53,7 +53,7 @@ namespace Codebase.Gameplay
         private void ConstructCustomerFactory(LevelConfiguration levelConfiguration)
         {
             _customerFactory = CreateCustomerFactory(levelConfiguration);
-            _customerHolder = new CustomersHolder(_customerFactory, _levelProgressService);
+            _customerHolder = CreateCustomerHolder();
             
             AddDisposable(_customerFactory);
             AddDisposable(_customerHolder);
@@ -71,15 +71,20 @@ namespace Codebase.Gameplay
             AddDisposable(new TimerCountPresenter(View.CurrentTimer, _levelProgressService));
         }
 
-        private ICustomerFactory CreateCustomerFactory(LevelConfiguration levelConfiguration)
-        {
-            return new CustomerFactory(
+        private ICustomerFactory CreateCustomerFactory(LevelConfiguration levelConfiguration) =>
+            new CustomerFactory(
                 _staticDataService.CraftingRecipes,
                 levelConfiguration,
                 _inputService,
                 View.Customers,
                 View.CustomerSpawnPoints);
-        }
+
+        private ICustomerHolder CreateCustomerHolder() =>
+            new CustomersHolder(
+                _customerFactory, 
+                _levelProgressService, 
+                _playerProgressService,
+                _staticDataService.PriceList);
 
         private void ConstructsDesignVariants(LevelConfiguration levelConfiguration)
         {
@@ -126,9 +131,7 @@ namespace Codebase.Gameplay
             }
         }
 
-        private void ConstructTrashBin()
-        {
+        private void ConstructTrashBin() => 
             AddDisposable(new TrashBinPresenter(View.TrashBin, _inputService));
-        }
     }
 }

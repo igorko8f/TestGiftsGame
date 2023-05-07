@@ -42,11 +42,10 @@ namespace Codebase.Customers.Orders
             var giftDraggable = _inputService.CurrentGiftPartDraggableItem as GiftDraggablePresenter;
             if (giftDraggable is null) return;
 
-            if (giftDraggable.Gift.Compare(_order.GiftsInOrder[_currentOrderIndex]))
-            {
-                giftDraggable.DestroyGift();
-                PrepareNextOrder();
-            }
+            if (!giftDraggable.Gift.Compare(_order.GiftsInOrder[_currentOrderIndex])) return;
+            
+            giftDraggable.DestroyGift();
+            PrepareNextOrder();
         }
 
         private void PrepareNextOrder()
@@ -65,7 +64,9 @@ namespace Codebase.Customers.Orders
         private void ActualizeOrderView(Gift currentOrder)
         {
             View.SetOrderView(_craftingRecipes.GetGiftSpriteByRecipe(currentOrder), currentOrder);
-        }
+            View.SetOrdersCountText(_order.GiftsInOrder.Count - _currentOrderIndex);
+        } 
+            
 
         private void DestroyOrder()
         {

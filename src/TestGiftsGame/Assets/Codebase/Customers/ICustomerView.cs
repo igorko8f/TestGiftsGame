@@ -6,6 +6,6 @@ namespace Codebase.Customers
     public interface ICustomerView : IView
     {
         OrderView OrderView { get; }
-        void SetTimer(float value, float step);
+        void SetTimer(float value);
     }
 }
