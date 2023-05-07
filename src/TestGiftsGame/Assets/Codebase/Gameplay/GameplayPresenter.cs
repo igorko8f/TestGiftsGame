@@ -54,6 +54,9 @@ namespace Codebase.Gameplay
         {
             _customerFactory = CreateCustomerFactory(levelConfiguration);
             _customerHolder = new CustomersHolder(_customerFactory, _levelProgressService);
+            
+            AddDisposable(_customerFactory);
+            AddDisposable(_customerHolder);
         }
 
         private void CreateInitialCustomers()
@@ -68,11 +71,12 @@ namespace Codebase.Gameplay
             AddDisposable(new TimerCountPresenter(View.CurrentTimer, _levelProgressService));
         }
 
-        private CustomerFactory CreateCustomerFactory(LevelConfiguration levelConfiguration)
+        private ICustomerFactory CreateCustomerFactory(LevelConfiguration levelConfiguration)
         {
             return new CustomerFactory(
                 _staticDataService.CraftingRecipes,
                 levelConfiguration,
+                _inputService,
                 View.Customers,
                 View.CustomerSpawnPoints);
         }

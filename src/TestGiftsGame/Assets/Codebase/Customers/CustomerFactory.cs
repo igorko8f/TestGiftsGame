@@ -4,6 +4,7 @@ using Codebase.Craft;
 using Codebase.Customers.Orders;
 using Codebase.Gifts;
 using Codebase.Level;
+using Codebase.Services;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -13,17 +14,20 @@ namespace Codebase.Customers
     {
         private readonly BoxCraftingRecipes _craftingRecipes;
         private readonly LevelConfiguration _levelConfiguration;
+        private readonly IInputService _inputService;
         private readonly CustomerView[] _customerViews;
         private readonly CustomerSpawnPoint[] _spawnPoints;
 
         public CustomerFactory(
             BoxCraftingRecipes craftingRecipes,
             LevelConfiguration levelConfiguration,
+            IInputService inputService,
             CustomerView[] customerViews,
             CustomerSpawnPoint[] spawnPoints)
         {
             _craftingRecipes = craftingRecipes;
             _levelConfiguration = levelConfiguration;
+            _inputService = inputService;
             _customerViews = customerViews;
             _spawnPoints = spawnPoints;
         }
@@ -46,7 +50,7 @@ namespace Codebase.Customers
             }
 
             var customer = new Customer(customerOrder);
-            return new CustomerPresenter(customerView, customer, spawnPoint);
+            return new CustomerPresenter(customerView, _inputService, _craftingRecipes, customer, spawnPoint);
         }
 
         private CustomerSpawnPoint GetEmptySpawnPoint()
@@ -100,6 +104,10 @@ namespace Codebase.Customers
             
             var availableRecipes = _craftingRecipes.GetAvailableRecipes(box, availableParts);
             return availableRecipes.Any() ? availableRecipes[Random.Range(0, availableRecipes.Count)] : null;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

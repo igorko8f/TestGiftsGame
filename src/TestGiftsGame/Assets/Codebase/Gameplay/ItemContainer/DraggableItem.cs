@@ -21,7 +21,6 @@ namespace Codebase.Gameplay.ItemContainer
         private Image _image;
         private RectTransform _transform;
         private Transform _parent;
-        private float _scaleFactor = 0.1f;
         private Vector3 _cashedPosition;
 
         public void Initialize()
@@ -31,11 +30,6 @@ namespace Codebase.Gameplay.ItemContainer
             _transform = GetComponent<RectTransform>();
             _parent = _transform.parent;
             _cashedPosition = _transform.localPosition;
-        }
-
-        public void SetScaleFactor(float scaleFactor)
-        {
-            _scaleFactor = scaleFactor;
         }
 
         public void SetSprite(Sprite sprite)

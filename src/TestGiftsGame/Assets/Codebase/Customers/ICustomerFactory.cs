@@ -1,6 +1,8 @@
-﻿namespace Codebase.Customers
+﻿using System;
+
+namespace Codebase.Customers
 {
-    public interface ICustomerFactory
+    public interface ICustomerFactory : IDisposable
     {
         CustomerPresenter CreateCustomer();
     }

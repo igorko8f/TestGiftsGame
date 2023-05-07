@@ -47,5 +47,10 @@
                     break;
             }
         }
+
+        public bool Compare(Gift gift)
+        {
+            return gift.Box == Box && gift.Bow == Bow && gift.Design == Design;
+        }
     }
 }

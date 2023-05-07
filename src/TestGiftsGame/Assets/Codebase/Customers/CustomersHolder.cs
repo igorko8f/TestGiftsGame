@@ -1,5 +1,5 @@
-﻿using Codebase.Services;
-using UniRx;
+﻿using System.Collections.Generic;
+using Codebase.Services;
 
 namespace Codebase.Customers
 {
@@ -7,10 +7,7 @@ namespace Codebase.Customers
     {
         private readonly ICustomerFactory _customerFactory;
         private readonly ILevelProgressService _levelProgressService;
-        public IReadOnlyReactiveCollection<CustomerPresenter> Customers => _customer;
-        private readonly IReactiveCollection<CustomerPresenter> _customer;
-        
-        private readonly CompositeDisposable _compositeDisposable;
+        private readonly List<CustomerPresenter> _customers = new();
         
         public CustomersHolder(
             ICustomerFactory customerFactory,
@@ -18,13 +15,6 @@ namespace Codebase.Customers
         {
             _customerFactory = customerFactory;
             _levelProgressService = levelProgressService;
-            
-            _customer = new ReactiveCollection<CustomerPresenter>();
-            _compositeDisposable = new CompositeDisposable();
-
-            Customers.ObserveRemove()
-                .Subscribe(_ => RemoveCustomer(_.Value))
-                .AddTo(_compositeDisposable);
         }
 
         public void CreateInitialCustomers(int count)
@@ -32,11 +22,14 @@ namespace Codebase.Customers
             for (int i = 0; i < count; i++)
                 CreateAnotherCustomer();
         }
-        
-        private void RemoveCustomer(CustomerPresenter customer)
+
+        public void RemoveCustomer(CustomerPresenter customer)
         {
+            customer.OnCustomerOrderComplete -= RemoveCustomer;
+            
             _levelProgressService.DecreaseCustomers();
-            customer.RaiseSpawnPoint();
+            _customers.Remove(customer);
+            
             CreateAnotherCustomer();
         }
 
@@ -46,13 +39,17 @@ namespace Codebase.Customers
 
             var customer = _customerFactory.CreateCustomer();
             if (customer is null) return;
-            
-            _customer.Add(_customerFactory.CreateCustomer());
+
+            customer.OnCustomerOrderComplete += RemoveCustomer;
+            _customers.Add(customer);
         }
 
         public void Dispose()
         {
-            _compositeDisposable.Dispose();
+            foreach (var customer in _customers)
+                customer.OnCustomerOrderComplete -= RemoveCustomer;
+            
+            _customers.Clear();
         }
     }
 }
