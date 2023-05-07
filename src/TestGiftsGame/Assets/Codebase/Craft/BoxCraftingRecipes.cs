@@ -15,16 +15,13 @@ namespace Codebase.Craft
         {
             if (giftConfig.Box is null) return null;
 
-            var recipesWithEqualBox = GetRecipes(Recipes, giftConfig.Box);
-            if (giftConfig.Bow is null)
-                return ReturnFirstMatch(recipesWithEqualBox);
+            var recipesFound = GetRecipes(Recipes, giftConfig.Box);
+            if (giftConfig.Bow is not null)
+                recipesFound = GetRecipes(recipesFound, giftConfig.Bow);
+            if (giftConfig.Design is not null)
+                recipesFound = GetRecipes(recipesFound, giftConfig.Design);
 
-            var recipesWithEqualBow = GetRecipes(recipesWithEqualBox, giftConfig.Bow);
-            if (giftConfig.Design is null)
-                return ReturnFirstMatch(recipesWithEqualBow);
-            
-            var recipesWithEqualDesign = GetRecipes(recipesWithEqualBow, giftConfig.Design);
-            return recipesWithEqualDesign.Any() ? recipesWithEqualDesign.FirstOrDefault()?.Result : null;
+            return ReturnFirstMatch(recipesFound);
         }
 
         private List<CraftingRecipe> GetRecipes(List<CraftingRecipe> from, GiftPart part)
