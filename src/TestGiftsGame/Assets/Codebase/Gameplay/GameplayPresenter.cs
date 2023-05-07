@@ -1,5 +1,7 @@
-﻿using Codebase.Gameplay.Crafting;
+﻿using Codebase.Customers;
+using Codebase.Gameplay.Crafting;
 using Codebase.Gameplay.ItemContainer;
+using Codebase.HUD;
 using Codebase.Level;
 using Codebase.MVP;
 using Codebase.Services;
@@ -9,29 +11,70 @@ namespace Codebase.Gameplay
     public class GameplayPresenter : BasePresenter<IGameplayView>
     {
         private readonly IStaticDataService _staticDataService;
+        private readonly IPlayerProgressService _playerProgressService;
+        private readonly ILevelProgressService _levelProgressService;
         private readonly IInputService _inputService;
+
+        private ICustomerFactory _customerFactory;
+        private ICustomerHolder _customerHolder;
 
         public GameplayPresenter(
             IGameplayView viewContract,
             IStaticDataService staticDataService,
+            IPlayerProgressService playerProgressService,
+            ILevelProgressService levelProgressService,
             IInputService inputService) 
             : base(viewContract)
         {
             _staticDataService = staticDataService;
+            _playerProgressService = playerProgressService;
+            _levelProgressService = levelProgressService;
             _inputService = inputService;
         }
 
         public void ConstructGameplay(LevelConfiguration levelConfiguration)
         {
             View.Hide();
+
+            ConstructCustomerFactory(levelConfiguration);
             
+            ConstructHUD();
             ConstructCraftSlots();
             ConstructBoxVariants(levelConfiguration);
             ConstructBowVariants(levelConfiguration);
             ConstructsDesignVariants(levelConfiguration);
             ConstructTrashBin();
             
+            CreateInitialCustomers();
+            
             View.Show();
+        }
+
+        private void ConstructCustomerFactory(LevelConfiguration levelConfiguration)
+        {
+            _customerFactory = CreateCustomerFactory(levelConfiguration);
+            _customerHolder = new CustomersHolder(_customerFactory, _levelProgressService);
+        }
+
+        private void CreateInitialCustomers()
+        {
+            _customerHolder.CreateInitialCustomers(View.CustomerSpawnPoints.Length);
+        }
+
+        private void ConstructHUD()
+        {
+            AddDisposable(new PlayerResourcesPresenter(View.PlayerResources, _playerProgressService));
+            AddDisposable(new CustomersCountPresenter(View.CustomersCount, _levelProgressService));
+            AddDisposable(new TimerCountPresenter(View.CurrentTimer, _levelProgressService));
+        }
+
+        private CustomerFactory CreateCustomerFactory(LevelConfiguration levelConfiguration)
+        {
+            return new CustomerFactory(
+                _staticDataService.CraftingRecipes,
+                levelConfiguration,
+                View.Customers,
+                View.CustomerSpawnPoints);
         }
 
         private void ConstructsDesignVariants(LevelConfiguration levelConfiguration)

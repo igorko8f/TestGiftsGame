@@ -9,6 +9,7 @@ namespace Codebase.Level
     {
         public int LevelNumber = 1;
         public int CustomersCount = 10;
+        public int Complexity = 1;
         public float OrderPreparationTime = 1f;
         public Box[] AvailableBoxes;
         public Bow[] AvailableBows;

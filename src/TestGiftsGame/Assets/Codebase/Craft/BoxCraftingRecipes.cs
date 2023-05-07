@@ -24,6 +24,39 @@ namespace Codebase.Craft
             return ReturnFirstMatch(recipesFound);
         }
 
+        public List<CraftingRecipe> GetAvailableRecipes(GiftPart boxPart, GiftPart[] availableParts)
+        {
+            var recipes = GetRecipes(boxPart);
+            var availableRecipes = FindAvailableRecipes(availableParts, recipes);
+            
+            return availableRecipes.Any() ? availableRecipes : null;
+        }
+
+        private List<CraftingRecipe> FindAvailableRecipes(GiftPart[] availableParts, List<CraftingRecipe> recipes)
+        {
+            var availableRecipes = new List<CraftingRecipe>();
+            var isRecipeAvailable = false;
+            foreach (var recipe in recipes)
+            {
+                foreach (var part in recipe.GiftParts)
+                {
+                    isRecipeAvailable = availableParts.Contains(part);
+                    if (isRecipeAvailable == false) break;
+                }
+
+                if (isRecipeAvailable) availableRecipes.Add(recipe);
+            }
+
+            return availableRecipes;
+        }
+
+        private List<CraftingRecipe> GetRecipes(GiftPart part)
+        {
+            return Recipes
+                .Where(x => x.GiftParts.Contains(part) && x.GiftParts.Length > 1)
+                .ToList();
+        }
+
         private List<CraftingRecipe> GetRecipes(List<CraftingRecipe> from, GiftPart part)
         {
             return from

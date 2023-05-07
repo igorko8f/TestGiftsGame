@@ -19,6 +19,19 @@ namespace Codebase.Installers
 
         protected override void InstallServices()
         {
+            BindInputService();
+            BindLevelProgressService();
+        }
+
+        private void BindLevelProgressService()
+        {
+            Container.BindInterfacesTo<LevelProgressService>()
+                .FromNew()
+                .AsSingle();
+        }
+
+        private void BindInputService()
+        {
             Container
                 .BindInterfacesTo<InputService>()
                 .FromNew()
