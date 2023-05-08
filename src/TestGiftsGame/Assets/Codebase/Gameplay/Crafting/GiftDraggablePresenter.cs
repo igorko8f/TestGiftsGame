@@ -23,9 +23,12 @@ namespace Codebase.Gameplay.Crafting
             Gift = new Gift();
         }
 
-        public void ChangeVisual(Sprite giftVisual)
+        public void ChangeVisual(Sprite giftVisual, bool changeWithAnimation)
         {
-            View.SetSprite(giftVisual);
+            if (changeWithAnimation)
+                View.SetSpriteWithAnimation(giftVisual);
+            else
+                View.SetSprite(giftVisual);
         }
         
         public void DestroyGift()
@@ -33,6 +36,11 @@ namespace Codebase.Gameplay.Crafting
             _onGiftDestroy?.OnNext(Unit.Default);
             View.Dispose();
             Dispose();
+        }
+
+        public void DestroyGiftWithAnimation()
+        {
+            View.RunDestroyAnimation(DestroyGift);
         }
 
         protected override void AddDraggableToService()

@@ -7,5 +7,6 @@ namespace Codebase.WinLose
     public interface IEndLevelPanelView : IView
     {
         IObservable<Unit> OnNextLevelButtonPressed { get; }
+        void AnimateEnter();
     }
 }

@@ -11,5 +11,6 @@ namespace Codebase.Customers.Orders
         IObservable<Unit> OnItemDropped { get; }
         void SetOrderView(Sprite giftImage, Gift gift);
         void SetOrdersCountText(int ordersCount);
+        void ShakePanel();
     }
 }

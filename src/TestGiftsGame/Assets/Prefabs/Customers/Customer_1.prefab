@@ -11,6 +11,18 @@ PrefabInstance:
       propertyPath: _customerSad
       value: 
       objectReference: {fileID: 21300000, guid: 8b45855bb083fa843ace24020190ae25, type: 3}
+    - target: {fileID: 1978115389003929398, guid: 37b24cd5a26755142812b2c037d71e32, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 297e7b6833c6fe64aa0468f40b6b393c, type: 3}
+    - target: {fileID: 3184833604030709648, guid: 37b24cd5a26755142812b2c037d71e32, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 496
+      objectReference: {fileID: 0}
+    - target: {fileID: 3184833604030709648, guid: 37b24cd5a26755142812b2c037d71e32, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 552
+      objectReference: {fileID: 0}
     - target: {fileID: 6310984114837000897, guid: 37b24cd5a26755142812b2c037d71e32, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

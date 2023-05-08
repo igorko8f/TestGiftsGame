@@ -1,5 +1,6 @@
 ﻿using Codebase.Customers.Orders;
 using Codebase.MVP;
+using DG.Tweening;
 
 namespace Codebase.Customers
 {
@@ -7,5 +8,7 @@ namespace Codebase.Customers
     {
         OrderView OrderView { get; }
         void SetTimer(float value);
+        void ShowCustomerAnimation();
+        void HideCustomerAnimation(TweenCallback callback);
     }
 }

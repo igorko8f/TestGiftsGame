@@ -23,6 +23,7 @@ namespace Codebase.WinLose
         {
             View.FadeBackground();
             var endLevelPanelView = victory ? View.GetWinPanel() : View.GetLosePanel();
+            endLevelPanelView.AnimateEnter();
             
             if (victory)
                 AddDisposable(new WinPanelPresenter(endLevelPanelView, _commandDispatcher, _playerProgressService));

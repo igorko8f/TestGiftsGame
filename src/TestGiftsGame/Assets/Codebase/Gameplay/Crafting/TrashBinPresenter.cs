@@ -23,7 +23,7 @@ namespace Codebase.Gameplay.Crafting
         private void OnItemDropped()
         {
             if (_inputService.CurrentGiftPartDraggableItem is not GiftDraggablePresenter draggable) return;
-            draggable.DestroyGift();
+            draggable.DestroyGiftWithAnimation();
         }
     }
 }

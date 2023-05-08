@@ -50,10 +50,13 @@ namespace Codebase.Gameplay.Crafting
         private void OnItemDropped()
         {
             if (_inputService.CurrentGiftPartDraggableItem is not GiftPartDraggablePresenter draggable) return;
+            var isBox = draggable.GiftPart is Box;
             
+            if (_generatedDraggableGift is null && !isBox) return; 
+                
             if (_generatedDraggableGift is null) SetupGiftView();
             
-            if (draggable.GiftPart is Box && _generatedDraggableGift.Gift.Box != null) return;
+            if (isBox && _generatedDraggableGift.Gift.Box != null) return;
 
             var gift = _generatedDraggableGift.Gift.Clone();
             gift.ApplyGiftPart(draggable.GiftPart);
@@ -63,8 +66,8 @@ namespace Codebase.Gameplay.Crafting
 
             _generatedDraggableGift.Gift.Copy(gift);
             draggable.ApplyItem();
-
-            _generatedDraggableGift.ChangeVisual(craftResult);
+            
+            _generatedDraggableGift.ChangeVisual(craftResult, !isBox);
         }
 
         private void SetupGiftView()

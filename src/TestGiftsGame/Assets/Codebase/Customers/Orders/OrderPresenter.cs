@@ -42,7 +42,11 @@ namespace Codebase.Customers.Orders
             var giftDraggable = _inputService.CurrentGiftPartDraggableItem as GiftDraggablePresenter;
             if (giftDraggable is null) return;
 
-            if (!giftDraggable.Gift.Compare(_order.GiftsInOrder[_currentOrderIndex])) return;
+            if (!giftDraggable.Gift.Compare(_order.GiftsInOrder[_currentOrderIndex]))
+            {
+                View.ShakePanel();
+                return;
+            }
             
             giftDraggable.DestroyGift();
             PrepareNextOrder();
@@ -70,7 +74,6 @@ namespace Codebase.Customers.Orders
 
         private void DestroyOrder()
         {
-            View.Dispose();
             Dispose();
         }
     }

@@ -37,6 +37,7 @@ namespace Codebase.Customers
             _orderCompleteSubscription = orderPresenter.OnOrderComplete
                 .Subscribe(_ => OnOrderComplete());
 
+            View.ShowCustomerAnimation();
             SetupTimer();
         }
 
@@ -66,25 +67,34 @@ namespace Codebase.Customers
 
         private void OnOrderComplete()
         {
-            DisposeCustomer();
-            OnCustomerOrderComplete?.Invoke(this, _customerModel.Order.GiftsInOrder.Count);
+            DisposeCustomerWithAnimation(LogOrderComplete);
         }
 
         private void OnTimeLeft()
         {
-            DisposeCustomer();
-            OnCustomerTimeLeft?.Invoke(this);
+            DisposeCustomerWithAnimation(LogTimeLeft);
         }
 
-        private void DisposeCustomer()
+        private void DisposeCustomerWithAnimation(Action action)
+        {
+            View.HideCustomerAnimation(() => DisposeCustomer(action));
+        }
+
+        private void DisposeCustomer(Action action)
         {
             _orderCompleteSubscription?.Dispose();
             RaiseSpawnPoint();
+            action?.Invoke();
 
             View.Dispose();
             Dispose();
         }
 
+        private void LogOrderComplete() => 
+            OnCustomerOrderComplete?.Invoke(this, _customerModel.Order.GiftsInOrder.Count);
+        
+        private void LogTimeLeft() => 
+            OnCustomerTimeLeft?.Invoke(this);
 
         private void RaiseSpawnPoint()
         {

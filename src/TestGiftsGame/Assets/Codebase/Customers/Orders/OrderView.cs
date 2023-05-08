@@ -2,6 +2,7 @@
 using Codebase.Gameplay.DraggableItems;
 using Codebase.Gifts;
 using Codebase.MVP;
+using DG.Tweening;
 using TMPro;
 using UniRx;
 using UnityEngine;
@@ -13,6 +14,8 @@ namespace Codebase.Customers.Orders
     [RequireComponent(typeof(Image))]
     public class OrderView : RawView, IOrderView, IDropHandler
     {
+        public const float AnimationSpeed = 0.5f;
+        
         public IObservable<Unit> OnItemDropped => _onItemDropped;
 
         [SerializeField] private Image _orderImage;
@@ -41,7 +44,13 @@ namespace Codebase.Customers.Orders
             _ordersCountText.enabled = ordersCount > 1;
             _ordersCountText.text = $"x{ordersCount}";
         }
-        
+
+        public void ShakePanel()
+        {
+            var sequence = SetupShakeSequence();
+            sequence.Play();
+        }
+
         private void ChangeGiftPartSprite(GiftPart giftPart, Image image)
         {
             bool partExist = giftPart is not null;
@@ -55,6 +64,16 @@ namespace Codebase.Customers.Orders
             {
                 _onItemDropped?.OnNext(Unit.Default);
             }
+        }
+
+        private Sequence SetupShakeSequence()
+        {
+            var sequence = DOTween.Sequence(transform);
+            sequence.SetTarget(transform);
+            sequence.SetAutoKill();
+
+            sequence.Append(transform.DOShakePosition(AnimationSpeed, 30, 20));
+            return sequence;
         }
     }
 }
