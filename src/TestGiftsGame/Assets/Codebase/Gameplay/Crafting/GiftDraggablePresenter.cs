@@ -1,5 +1,5 @@
 ﻿using System;
-using Codebase.Gameplay.ItemContainer;
+using Codebase.Gameplay.DraggableItems;
 using Codebase.Gifts;
 using Codebase.Services;
 using UniRx;

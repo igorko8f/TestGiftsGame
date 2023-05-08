@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace Codebase.Gameplay.ItemContainer
+namespace Codebase.Gameplay.DraggableItems
 {
     [RequireComponent(typeof(CanvasGroup))]
     [RequireComponent(typeof(Image))]

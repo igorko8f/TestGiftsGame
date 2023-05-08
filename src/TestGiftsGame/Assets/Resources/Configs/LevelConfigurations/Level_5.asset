@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48f8d3e1b6f4291b80de506511ab9ec, type: 3}
+  m_Name: Level_5
+  m_EditorClassIdentifier: 
+  LevelNumber: 5
+  CustomersCount: 15
+  Complexity: 3
+  OrderPreparationTime: 60
+  AvailableBoxes:
+  - {fileID: 11400000, guid: 23468456283499f48b04836a23d4a527, type: 2}
+  - {fileID: 11400000, guid: b59da0352f1d1c54db1ce7522593f748, type: 2}
+  - {fileID: 11400000, guid: d9b88b0eb94527e4c873a1ccea904b65, type: 2}
+  AvailableBows:
+  - {fileID: 11400000, guid: c4155b6db3f86e746a4ab854327fceb3, type: 2}
+  - {fileID: 11400000, guid: c86c9e781c4714e4a82f5848b3db9c01, type: 2}
+  - {fileID: 11400000, guid: 518aeda928a20c2479b515e963863c51, type: 2}
+  AvailableDesigns:
+  - {fileID: 11400000, guid: 48e4b74250607424588e4327fa3ad071, type: 2}
+  - {fileID: 11400000, guid: 08c66e4434fcdd94e8ad37b65bc5b40f, type: 2}
+  - {fileID: 11400000, guid: b6a00730c1b490f40b1eae7d861ed394, type: 2}

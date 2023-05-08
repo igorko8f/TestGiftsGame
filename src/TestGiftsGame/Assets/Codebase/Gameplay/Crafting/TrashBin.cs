@@ -1,5 +1,5 @@
 ﻿using System;
-using Codebase.Gameplay.ItemContainer;
+using Codebase.Gameplay.DraggableItems;
 using Codebase.MVP;
 using UniRx;
 using UnityEngine.EventSystems;

@@ -1,16 +1,12 @@
 using Codebase.Systems.CommandSystem.Payloads;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Zenject;
 
 namespace Codebase.Systems.CommandSystem.Commands
 {
     public class UnloadSceneCommand : Command
     {
-        public UnloadSceneCommand()
-        {
-            
-        }
-        
         protected override void Execute(ICommandPayload payload)
         {
             Retain();

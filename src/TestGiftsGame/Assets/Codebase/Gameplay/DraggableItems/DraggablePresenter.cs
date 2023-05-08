@@ -1,10 +1,9 @@
-﻿using Codebase.Gameplay.ItemContainer;
-using Codebase.MVP;
+﻿using Codebase.MVP;
 using Codebase.Services;
 using UniRx;
 using UnityEngine;
 
-namespace Codebase.Gameplay
+namespace Codebase.Gameplay.DraggableItems
 {
     public class DraggablePresenter : BasePresenter<IDraggable>
     {

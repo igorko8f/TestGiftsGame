@@ -14,6 +14,8 @@ namespace Codebase.HUD
             playerProgressService.ResourcesCount
                 .Subscribe(View.SetText)
                 .AddTo(CompositeDisposable);
+            
+            View.SetText(playerProgressService.ResourcesCount.Value);
         }
     }
 }

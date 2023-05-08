@@ -1,7 +1,7 @@
 ﻿using Codebase.MVP;
 using UnityEngine;
 
-namespace Codebase.Gameplay.ItemContainer
+namespace Codebase.Gameplay.DraggableItems
 {
     public class DraggableItemContainer : RawView, IDraggableItemContainerView
     {

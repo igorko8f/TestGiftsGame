@@ -8,6 +8,8 @@ namespace Codebase.Services
     {
         BoxCraftingRecipes CraftingRecipes { get; }
         PriceList PriceList { get; }
+        CraftingSlot[] CraftingSlots { get; }
+        int TotalLevelsCount { get; }
         LevelConfiguration GetConfigForLevel(int level);
     }
 }

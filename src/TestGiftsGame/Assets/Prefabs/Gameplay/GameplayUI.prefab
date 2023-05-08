@@ -412,7 +412,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -494,9 +494,6 @@ MonoBehaviour:
   - {fileID: 3649404735989814419}
   - {fileID: 2995437495328869926}
   - {fileID: 1664391223520689411}
-  _playerResources: {fileID: 0}
-  _customersCount: {fileID: 0}
-  _currentTimer: {fileID: 0}
 --- !u!1 &2902080658627093913
 GameObject:
   m_ObjectHideFlags: 0

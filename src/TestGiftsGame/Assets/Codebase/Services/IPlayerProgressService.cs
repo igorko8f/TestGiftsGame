@@ -7,7 +7,10 @@ namespace Codebase.Services
     {
         IReadOnlyReactiveProperty<int> ResourcesCount { get; }
         IReadOnlyReactiveProperty<int> LastLevelIndex { get; }
+        IReadOnlyReactiveCollection<string> BoughtCraftingSlots { get; }
         void AddResources(int amount);
-        void SpendResources(int amount);
+        bool SpendResources(int amount);
+        void IncreaseLevelIndex();
+        void BuyCraftingSlot(string id);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Linq;
 using Codebase.Craft;
-using Codebase.Gameplay.ItemContainer;
+using Codebase.Gameplay.DraggableItems;
 using Codebase.Gifts;
 using Codebase.MVP;
 using Codebase.Services;
@@ -13,6 +14,8 @@ namespace Codebase.Gameplay.Crafting
     {
         private readonly BoxCraftingRecipes _craftingRecipes;
         private readonly IInputService _inputService;
+        private readonly IPlayerProgressService _playerProgressService;
+        private readonly CraftingSlot _slot;
         private readonly Canvas _gameplayCanvas;
 
         private GiftDraggablePresenter _generatedDraggableGift;
@@ -22,19 +25,26 @@ namespace Codebase.Gameplay.Crafting
             ICraftingSlotView viewContract,
             BoxCraftingRecipes craftingRecipes,
             IInputService inputService,
-            Canvas canvas,
-            bool openSlot) 
+            IPlayerProgressService playerProgressService,
+            CraftingSlot slot,
+            Canvas canvas) 
             : base(viewContract)
         {
             _craftingRecipes = craftingRecipes;
             _inputService = inputService;
+            _playerProgressService = playerProgressService;
+            _slot = slot;
             _gameplayCanvas = canvas;
             
             View.OnItemDropped
                 .Subscribe(_ => OnItemDropped())
                 .AddTo(CompositeDisposable);
+
+            View.OnBuySlot
+                .Subscribe(_ => TryBuySlot())
+                .AddTo(CompositeDisposable);
             
-            View.SetOpenState(openSlot);
+            View.SetOpenState(_playerProgressService.BoughtCraftingSlots.Contains(slot.ID), slot.Price);
         }
 
         private void OnItemDropped()
@@ -69,6 +79,13 @@ namespace Codebase.Gameplay.Crafting
         {
             _giftDestroySubscription?.Dispose();
             _generatedDraggableGift = null;
+        }
+
+        private void TryBuySlot()
+        {
+            if (_playerProgressService.SpendResources(_slot.Price) == false) return;
+            _playerProgressService.BuyCraftingSlot(_slot.ID);
+            View.SetOpenState(true, _slot.Price);
         }
     }
 }

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Level_1
   m_EditorClassIdentifier: 
   LevelNumber: 1
-  CustomersCount: 10
+  CustomersCount: 8
   Complexity: 1
-  OrderPreparationTime: 10
+  OrderPreparationTime: 60
   AvailableBoxes:
   - {fileID: 11400000, guid: 23468456283499f48b04836a23d4a527, type: 2}
   - {fileID: 11400000, guid: b59da0352f1d1c54db1ce7522593f748, type: 2}

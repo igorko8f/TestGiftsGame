@@ -1,6 +1,6 @@
 ﻿using Codebase.MVP;
 
-namespace Codebase.Gameplay.ItemContainer
+namespace Codebase.Gameplay.DraggableItems
 {
     public interface IDraggableItemContainerView : IView
     {

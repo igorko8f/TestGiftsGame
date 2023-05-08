@@ -3,7 +3,7 @@ using Codebase.MVP;
 using UniRx;
 using UnityEngine;
 
-namespace Codebase.Gameplay.ItemContainer
+namespace Codebase.Gameplay.DraggableItems
 {
     public interface IDraggable : IView
     {

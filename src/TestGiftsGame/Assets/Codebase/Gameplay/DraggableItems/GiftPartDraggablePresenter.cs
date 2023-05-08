@@ -4,7 +4,7 @@ using Codebase.Services;
 using UniRx;
 using UnityEngine;
 
-namespace Codebase.Gameplay.ItemContainer
+namespace Codebase.Gameplay.DraggableItems
 {
     public class GiftPartDraggablePresenter : DraggablePresenter
     {

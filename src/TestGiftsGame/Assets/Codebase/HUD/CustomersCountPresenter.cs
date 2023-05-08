@@ -14,6 +14,8 @@ namespace Codebase.HUD
             levelProgressService.CustomersCount
                 .Subscribe(View.SetText)
                 .AddTo(CompositeDisposable);
+            
+            View.SetText(levelProgressService.CustomersCount.Value);
         }
     }
 }

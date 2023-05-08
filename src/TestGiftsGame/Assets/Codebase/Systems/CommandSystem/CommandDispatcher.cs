@@ -13,6 +13,11 @@ namespace Codebase.Systems.CommandSystem
             Dispatch<TSignal>(null);
         }
 
+        public bool HasListener(Type type)
+        {
+            return _signals.ContainsKey(type);
+        }
+
         public void Dispatch<TSignal>(ICommandPayload payload) where TSignal : ISignal
         {
             var key = typeof(TSignal);
@@ -23,7 +28,7 @@ namespace Codebase.Systems.CommandSystem
             
             _signals[key].Invoke(payload);
         }
-        
+
         public void AddListener(Type type, Action<ICommandPayload> action)
         {
             if (HasListener(type))
@@ -42,11 +47,6 @@ namespace Codebase.Systems.CommandSystem
             }
         }
 
-        private bool HasListener(Type type)
-        {
-            return _signals.ContainsKey(type);
-        }
-        
         public void Dispose()
         {
             _signals.Clear();

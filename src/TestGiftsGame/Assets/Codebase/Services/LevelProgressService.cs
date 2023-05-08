@@ -1,4 +1,7 @@
 ﻿using System;
+using Codebase.Systems.CommandSystem;
+using Codebase.Systems.CommandSystem.Payloads;
+using Codebase.Systems.CommandSystem.Signals;
 using UniRx;
 
 namespace Codebase.Services
@@ -7,7 +10,8 @@ namespace Codebase.Services
     {
         public IReadOnlyReactiveProperty<int> CustomersCount => _customersCount;
         public IReadOnlyReactiveProperty<float> CurrentTime => _currentTime;
-        
+
+        private readonly ICommandDispatcher _commandDispatcher;
         private readonly ReactiveProperty<int> _customersCount;
         private readonly ReactiveProperty<float> _currentTime;
         private readonly CompositeDisposable _compositeDisposable;
@@ -16,8 +20,10 @@ namespace Codebase.Services
         
         public LevelProgressService(
             IStaticDataService staticDataService,
-            IPlayerProgressService playerProgressService)
+            IPlayerProgressService playerProgressService,
+            ICommandDispatcher commandDispatcher)
         {
+            _commandDispatcher = commandDispatcher;
             _compositeDisposable = new CompositeDisposable();
 
             var levelConfig = staticDataService.GetConfigForLevel(playerProgressService.LastLevelIndex.Value);
@@ -34,7 +40,11 @@ namespace Codebase.Services
 
         public void DecreaseCustomers()
         {
-            if (_customersCount.Value <= 0) return;
+            if (_customersCount.Value <= 1)
+            {
+                EndMatch(true);
+            }
+            
             _customersCount.Value -= 1;
         }
 
@@ -42,14 +52,20 @@ namespace Codebase.Services
         {
             if (_currentTimerValue <= 0)
             {
-                //TriggerLose
-                Dispose();
+                EndMatch(false);
+                return;
             }
 
             _currentTimerValue -= 1f;
             _currentTime.Value = _currentTimerValue;
         }
-        
+
+        private void EndMatch(bool levelComplete)
+        {
+            _commandDispatcher.Dispatch<EndLevelSignal>(new EndLevelStatePayload(levelComplete));
+            Dispose();
+        }
+
         public void Dispose()
         {
             _compositeDisposable.Dispose();

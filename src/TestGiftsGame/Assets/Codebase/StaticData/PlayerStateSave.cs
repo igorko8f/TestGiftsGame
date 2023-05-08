@@ -5,5 +5,6 @@
     {
         public int ResourcesCount;
         public int LastLevelIndex;
+        public string[] BoughtCraftingSlots;
     }
 }

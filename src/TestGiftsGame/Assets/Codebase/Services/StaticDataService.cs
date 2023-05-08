@@ -15,11 +15,14 @@ namespace Codebase.Services
 
         public BoxCraftingRecipes CraftingRecipes => _craftingRecipes;
         public PriceList PriceList => _priceList;
+        public CraftingSlot[] CraftingSlots => _craftingSlots;
+        public int TotalLevelsCount => _totalLevelsCount;
 
         private List<LevelConfiguration> _levelConfigurations = new();
         private BoxCraftingRecipes _craftingRecipes;
         private PriceList _priceList;
-
+        private CraftingSlot[] _craftingSlots;
+        private int _totalLevelsCount;
 
         public StaticDataService(IProjectResourcesProvider resourcesProvider)
         {
@@ -53,6 +56,8 @@ namespace Codebase.Services
             
             if (_levelConfigurations.Any() == false) return false;
 
+            _totalLevelsCount = _levelConfigurations.Count - 1;
+            
             _craftingRecipes = _resourcesProvider
                 .LoadResources<BoxCraftingRecipes>()
                 .FirstOrDefault();
@@ -60,6 +65,10 @@ namespace Codebase.Services
             _priceList = _resourcesProvider
                 .LoadResources<PriceList>()
                 .FirstOrDefault();
+
+            _craftingSlots = _resourcesProvider
+                .LoadResources<CraftingSlot>()
+                .ToArray();
 
             return _craftingRecipes is not null;
         }

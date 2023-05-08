@@ -14,6 +14,8 @@ namespace Codebase.HUD
             levelProgressService.CurrentTime
                 .Subscribe(View.SetText)
                 .AddTo(CompositeDisposable);
+            
+            View.SetText(levelProgressService.CurrentTime.Value);
         }
     }
 }

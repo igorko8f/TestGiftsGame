@@ -6,6 +6,6 @@ namespace Codebase.Services
     public interface ISaveLoadService: IDisposable
     {
         PlayerStateSave LoadPlayerState();
-        void SavePlayerState(int resourcesCount, int lastLevelIndex);
+        void SavePlayerState(int resourcesCount, int lastLevelIndex, string[] boughtCraftingSlots);
     }
 }

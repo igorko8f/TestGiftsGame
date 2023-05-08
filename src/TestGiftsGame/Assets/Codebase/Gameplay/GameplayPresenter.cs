@@ -1,7 +1,6 @@
 ﻿using Codebase.Customers;
 using Codebase.Gameplay.Crafting;
-using Codebase.Gameplay.ItemContainer;
-using Codebase.HUD;
+using Codebase.Gameplay.DraggableItems;
 using Codebase.Level;
 using Codebase.MVP;
 using Codebase.Services;
@@ -38,7 +37,6 @@ namespace Codebase.Gameplay
 
             ConstructCustomerFactory(levelConfiguration);
             
-            ConstructHUD();
             ConstructCraftSlots();
             ConstructBoxVariants(levelConfiguration);
             ConstructBowVariants(levelConfiguration);
@@ -64,13 +62,6 @@ namespace Codebase.Gameplay
             _customerHolder.CreateInitialCustomers(View.CustomerSpawnPoints.Length);
         }
 
-        private void ConstructHUD()
-        {
-            AddDisposable(new PlayerResourcesPresenter(View.PlayerResources, _playerProgressService));
-            AddDisposable(new CustomersCountPresenter(View.CustomersCount, _levelProgressService));
-            AddDisposable(new TimerCountPresenter(View.CurrentTimer, _levelProgressService));
-        }
-
         private ICustomerFactory CreateCustomerFactory(LevelConfiguration levelConfiguration) =>
             new CustomerFactory(
                 _staticDataService.CraftingRecipes,
@@ -85,6 +76,9 @@ namespace Codebase.Gameplay
                 _levelProgressService, 
                 _playerProgressService,
                 _staticDataService.PriceList);
+
+        private void ConstructTrashBin() => 
+            AddDisposable(new TrashBinPresenter(View.TrashBin, _inputService));
 
         private void ConstructsDesignVariants(LevelConfiguration levelConfiguration)
         {
@@ -124,14 +118,15 @@ namespace Codebase.Gameplay
 
         private void ConstructCraftSlots()
         {
-            foreach (var view in View.CraftingSlots)
+            for (int i = 0; i < _staticDataService.CraftingSlots.Length; i++)
             {
-                AddDisposable(new CraftingSlotPresenter(view, _staticDataService.CraftingRecipes, _inputService, View.Canvas,
-                    true));
+                if (i >= View.CraftingSlots.Length) break;
+                var view = View.CraftingSlots[i];
+                var craftingSlotConfig = _staticDataService.CraftingSlots[i];
+                
+                AddDisposable(new CraftingSlotPresenter(view, _staticDataService.CraftingRecipes, 
+                    _inputService, _playerProgressService, craftingSlotConfig, View.Canvas));
             }
         }
-
-        private void ConstructTrashBin() => 
-            AddDisposable(new TrashBinPresenter(View.TrashBin, _inputService));
     }
 }

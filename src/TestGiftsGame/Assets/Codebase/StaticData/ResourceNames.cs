@@ -12,7 +12,8 @@ namespace Codebase.StaticData
         {
             new ResourceName(typeof(LevelConfiguration), "Configs/LevelConfigurations"),
             new ResourceName(typeof(BoxCraftingRecipes), "Configs/BoxRecipes"),
-            new ResourceName(typeof(PriceList), "Configs/PriceList")
+            new ResourceName(typeof(PriceList), "Configs/PriceList"),
+            new ResourceName(typeof(CraftingSlot), "Configs/CraftingSlots")
         };
 
         public static string GetLocation<TResource>() where TResource : IResource

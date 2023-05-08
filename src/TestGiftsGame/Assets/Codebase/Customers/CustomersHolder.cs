@@ -46,7 +46,7 @@ namespace Codebase.Customers
 
         private void CreateAnotherCustomer()
         {
-            if (_levelProgressService.CustomersCount.Value <= 0) return;
+            if (_levelProgressService.CustomersCount.Value - _customers.Count <= 0) return;
 
             var customer = _customerFactory.CreateCustomer();
             if (customer is null) return;

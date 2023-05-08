@@ -29,6 +29,11 @@ namespace Codebase.Systems.Binders
             return GetBinding(typeof(TKey));
         }
 
+        public bool HasBinding(Type key)
+        {
+            return _bindings.ContainsKey(key);
+        }
+
         protected virtual IBinding<T> Bind(Type key)
         {
             if (HasBinding(key))
@@ -63,11 +68,6 @@ namespace Codebase.Systems.Binders
         protected virtual IBinding<T> InstallBinding(Type key)
         {
             return new Binding<T>(key, _instantiator);
-        }
-
-        protected bool HasBinding(Type key)
-        {
-            return _bindings.ContainsKey(key);
         }
 
         public void Dispose()
